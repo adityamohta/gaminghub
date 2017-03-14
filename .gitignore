@@ -1,0 +1,6 @@
+*.pyc
+*.py~
+.idea/
+db.sqlite3
+nohup.out
+hub/settings/local.py
