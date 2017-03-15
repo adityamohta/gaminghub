@@ -1,6 +1,7 @@
 *.pyc
 *.py~
 .idea/
+*/migrations/
 db.sqlite3
 nohup.out
 hub/settings/local.py
