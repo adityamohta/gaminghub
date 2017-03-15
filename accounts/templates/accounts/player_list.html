@@ -2,10 +2,14 @@
 
 
 {% block content %}
-<h1>user detail view</h1>
+{{ block.super }}
 
-{% for player in players %}
-<p>{{ player.username }}</p>
-{% endfor %}
+<h1>Player List view</h1>
+<a href="{% url 'accounts:logout' %}">logout</a>
+<ul>
+    {% for player in players %}
+    <li><a href="{{ player.get_absolute_url }}">{{ player.username }}</a></li>
+    {% endfor %}
+</ul>
 
 {% endblock content %}
