@@ -6,15 +6,19 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 
-# Create your models here.
-
-
 class Player(User):
     # implement
     # profile as foreignkey, about as charfield, player as manytomanyfield through friends model.
+    friends = models.ManyToManyField('Player', through='friends.Friendship', verbose_name='list of friends')
+
+    def __unicode__(self):
+        return self.username
 
     def get_absolute_url(self):
         return reverse('accounts:profile', kwargs={'username': self.username})
 
+    def get_friends_count(self):
+        return self.friends.count()
+
     class Meta:
-        app_label = "accounts"
+        app_label = 'accounts'

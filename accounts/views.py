@@ -9,7 +9,7 @@ from accounts.models import Player
 from accounts.mixins import LoginRequiredMixin
 
 
-class PlayerDetail(DetailView):
+class PlayerDetail(LoginRequiredMixin, DetailView):
     model = Player
     context_object_name = "player"
     # template_name = "accounts/player_detail.html"     # this is default value of template_name
@@ -36,6 +36,11 @@ class PlayerCreate(CreateView):     # create view/ registration
     # therefore in this case default name was "accounts/player_form.html"
     template_name = "accounts/player_create.html"
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return redirect("accounts:players")
+        return super(PlayerCreate, self).get(request, *args, **kwargs)
+
 
 class PlayerLogin(FormView):
     form_class = PlayerLoginForm
@@ -52,6 +57,9 @@ class PlayerLogin(FormView):
         password = form.cleaned_data.get("password")
         user = authenticate(username=username, password=password)
         login(self.request, user)
+        # session variables accessed in navbar.
+        self.request.session["username"] = user.username
+        self.request.session["email"] = user.email
         return super(PlayerLogin, self).form_valid(form)
 
 

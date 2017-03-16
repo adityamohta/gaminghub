@@ -2,10 +2,114 @@
 
 
 {% block content %}
-<h1>Player create view</h1>
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save" />
-</form>
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        .input-field input[type=date]:focus + label,
+        .input-field input[type=text]:focus + label,
+        .input-field input[type=email]:focus + label,
+        .input-field input[type=password]:focus + label {
+            color: #e91e63;
+        }
+
+        .input-field input[type=date]:focus,
+        .input-field input[type=text]:focus,
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus {
+            border-bottom: 2px solid #e91e63;
+            box-shadow: none;
+        }
+    </style>
+
+    <div class="section"></div>
+    <main>
+        <center>
+            {#            <img class="responsive-img" style="width: 250px;" src="http://i.imgur.com/ax0NCsK.gif" />#}
+            <div class="section"></div>
+
+            <h5 class="cyan-text">Create account</h5>
+            <div class="section"></div>
+
+            <div class="container">
+                <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                    <form class="col s12" method="post">{% csrf_token %}
+                        <div class='row'>
+                            <div class='col s12'>
+                                {{ form.non_field_errors }}
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.first_name }}
+                                {{ form.first_name.label_tag }}
+                                {#                                <label for='{{ form.username.id_for_label }}' data-error="{{ form.username.errors }}">{{ form.username.label }}</label>#}
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.last_name }}
+                                {{ form.last_name.label_tag }}
+                                {#                                <label for='{{ form.username.id_for_label }}' data-error="{{ form.username.errors }}">{{ form.username.label }}</label>#}
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.username }}
+                                {{ form.username.label_tag }}
+                                {#                                <label for='{{ form.username.id_for_label }}' data-error="{{ form.username.errors }}">{{ form.username.label }}</label>#}
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.email }}
+                                {{ form.email.label_tag }}
+                                {#                                <label for='{{ form.username.id_for_label }}' data-error="{{ form.username.errors }}">{{ form.username.label }}</label>#}
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.password }}
+                                {{ form.password.label_tag }}
+                                {#                                <label for='{{ form.password.id_for_label }}' data-error="{{ form.password.errors }}">{{ form.password.label }}</label>#}
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.confirm_password }}
+                                {{ form.confirm_password.label_tag }}
+                                {#                                <label for='{{ form.password.id_for_label }}' data-error="{{ form.password.errors }}">{{ form.password.label }}</label>#}
+                            </div>
+                            <label style='float: right;'>
+                                <a class='pink-text' href='{% url 'accounts:login' %}'><b>Already a member? SignIn</b></a>
+                            </label>
+                        </div>
+
+                        <br />
+                        <center>
+                            <div class='row'>
+                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect cyan'>Signup</button>
+                            </div>
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </center>
+
+        <div class="section"></div>
+        <div class="section"></div>
+    </main>
 
 {% endblock content %}

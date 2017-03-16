@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {{ block.super }}
+    <main>
+        <div class="row">
+            <div class="col s12">
+                <h2 class="flow-text center">Friends</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>First Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for player in friends %}
+                        <tr>
+                            <td><a href="{{ player.get_absolute_url }}">{{ player.username }}</a></td>
+                            <td>{{ player.first_name }} {{ player.last_name }}</td>
+                        </tr>
+                    {% empty %}
+                        <p>you have no friends :(</p>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+    </main>
+
+{% endblock content %}

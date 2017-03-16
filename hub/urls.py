@@ -21,6 +21,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
+    url(r"^friends/", include("friends.urls", namespace="friends")),
 ]
 
 if settings.DEBUG:
