@@ -1,0 +1,15 @@
+.background{
+    background-color: #fff;
+}
+
+div.nav-wrapper{
+    background: #00bcd4;
+}
+
+h2.flow-text.center{
+    font-size: xx-large;
+}
+
+.dropdown-content li>a, .dropdown-content li>span{
+    color: #00bcd4;
+}

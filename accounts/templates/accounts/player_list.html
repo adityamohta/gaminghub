@@ -2,14 +2,36 @@
 
 
 {% block content %}
-{{ block.super }}
+    {{ block.super }}
+    <main>
+        <div class="row">
+            <div class="col s12">
+                <h2 class="flow-text center">Players</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>First Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for player in players %}
+                            <tr>
+                                <td><a href="{{ player.get_absolute_url }}">{{ player.username }}</a></td>
+                                <td>{{ player.first_name }} {{ player.last_name }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <ul>
 
-<h1>Player List view</h1>
-<a href="{% url 'accounts:logout' %}">logout</a>
-<ul>
-    {% for player in players %}
-    <li><a href="{{ player.get_absolute_url }}">{{ player.username }}</a></li>
-    {% endfor %}
-</ul>
+                </ul>
+            </div>
+        </div>
+    </main>
 
 {% endblock content %}
