@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {{ block.super }}
+    <div class="section"></div>
+    <main>
+        <center>
+            <div class="section"></div>
+
+            <div class="container">
+                <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                    <form class="col s12" method="post">{% csrf_token %}
+                        <div class='row'>
+                            <div class='col s12'>
+                                {{ form.non_field_errors }}
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.first_name }}
+                                {{ form.first_name.label_tag }}
+                                {#                                <label for='{{ form.username.id_for_label }}' data-error="{{ form.username.errors }}">{{ form.username.label }}</label>#}
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                {{ form.last_name }}
+                                {{ form.last_name.label_tag }}
+                                {#                                <label for='{{ form.password.id_for_label }}' data-error="{{ form.password.errors }}">{{ form.password.label }}</label>#}
+                            </div>
+                        </div>
+
+                        <br />
+                        <center>
+                            <div class='row'>
+                                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect cyan'>Save</button>
+                            </div>
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </center>
+
+        <div class="section"></div>
+        <div class="section"></div>
+    </main>
+
+{% endblock content %}

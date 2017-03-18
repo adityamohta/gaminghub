@@ -41,6 +41,16 @@ class PlayerCreateForm(forms.ModelForm):
         ]
 
 
+class PlayerUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Player
+        fields = [
+            "first_name",
+            "last_name"
+        ]
+
+
 class PlayerLoginForm(forms.Form):
 
     username = forms.CharField()

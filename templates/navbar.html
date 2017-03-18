@@ -22,12 +22,13 @@
                     {{ request.session.username }}
                     <i class="material-icons right">view_stream</i>
                 </a>
+                <a href="#"><span class="email">{{ request.session.name }}</span></a>
                 <a href="#"><span class="email">{{ request.session.email }}</span></a>
                 <!-- Dropdown Trigger -->
 
                 <!-- Dropdown Structure -->
                 <ul id='dropdown1' class='dropdown-content'>
-                    <li><a href="">Profile</a></li>
+                    <li><a href="{% url 'accounts:update' %}">Profile</a></li>
                     <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
                 </ul>
             </div></li>

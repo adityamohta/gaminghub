@@ -5,7 +5,8 @@ from accounts.views import (
     PlayerDetail,
     PlayerList,
     PlayerLogin,
-    PlayerLogout
+    PlayerLogout,
+    PlayerUpdate
 )
 
 urlpatterns = [
@@ -13,5 +14,6 @@ urlpatterns = [
     url(r"^login/$", PlayerLogin.as_view(), name="login"),
     url(r"^logout/$", PlayerLogout.as_view(), name="logout"),
     url(r"^create/$", PlayerCreate.as_view(), name="create"),
+    url(r"^update/$", PlayerUpdate.as_view(), name="update"),
     url(r"^(?P<username>[\w.@+-]+)/profile/$", PlayerDetail.as_view(), name="profile"),
 ]

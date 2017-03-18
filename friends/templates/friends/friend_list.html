@@ -16,16 +16,31 @@
                     <tr>
                         <th>Username</th>
                         <th>First Name</th>
+                        <th>Friend</th>
                     </tr>
                     </thead>
                     <tbody>
+                    {% for player in friend_requests_sent %}
+                        <tr>
+                            <td><a href="{{ player.get_absolute_url }}">{{ player.username }}</a></td>
+                            <td>{{ player.first_name }} {{ player.last_name }}</td>
+                            <td><button class="btn waves-effect waves-light pink">sent</button></td>
+                        </tr>
+                    {% endfor %}
+
+                    {% for player in friend_requests_received %}
+                        <tr>
+                            <td><a href="{{ player.get_absolute_url }}">{{ player.username }}</a></td>
+                            <td>{{ player.first_name }} {{ player.last_name }}</td>
+                            <td><button class="btn waves-effect waves-light">accept</button></td>
+                        </tr>
+                    {% endfor %}
                     {% for player in friends %}
                         <tr>
                             <td><a href="{{ player.get_absolute_url }}">{{ player.username }}</a></td>
                             <td>{{ player.first_name }} {{ player.last_name }}</td>
+                            <td><button class="btn waves-effect waves-light cyan">Friends<i class="material-icons right">done</i></button></td>
                         </tr>
-                    {% empty %}
-                        <p>you have no friends :(</p>
                     {% endfor %}
                     </tbody>
                 </table>

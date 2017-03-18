@@ -14,6 +14,9 @@ class Player(User):
     def __unicode__(self):
         return self.username
 
+    def get_full_name(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
     def get_absolute_url(self):
         return reverse('accounts:profile', kwargs={'username': self.username})
 
