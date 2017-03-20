@@ -5,3 +5,9 @@
 db.sqlite3
 nohup.out
 hub/settings/local.py
+accounts/__pycache__/
+
+friends/__pycache__/
+hub/__pycache__/
+hub/settings/__pycache__/
+/

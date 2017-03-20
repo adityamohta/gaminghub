@@ -13,6 +13,8 @@ class Friendship(models.Model):
     requested_at = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(auto_now=True)
 
+    room_created = models.BooleanField(default=False)  # make True when friend request accepted
+
     def __unicode__(self):
         return "%s" % str(self.requested_at)
 
