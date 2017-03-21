@@ -1,13 +1,14 @@
 {% extends "chat/chat_base.html" %}
 
-{% block title %}MultiChat Example{% endblock %}
-{% block header_text %}MultiChat Example{% endblock %}
+{% block title %}Chat Room{% endblock %}
+{% block header_text %}Chat Room{% endblock %}
 
 {% block content %}
 
     <ul class="rooms">
         {% for room in rooms %}
-            <li class="room-link" data-room-id="{{ room.id }}">{{ room }}</li>
+           <li class="room-link" data-room-id="{{ room.friendship.id }}" data-room-msg="{{room.msg}}">{{ room }}</li>
+
         {% empty %}
         {% endfor %}
     </ul>
@@ -71,6 +72,7 @@
                     switch (data.msg_type) {
                         case 0:
                             // Message
+
                             ok_msg = "<div class='message'>" +
                                     "<span class='username'>" + data.username + "</span>" +
                                     "<span class='body'>" + data.message + "</span>" +
@@ -115,6 +117,8 @@
                 }
             };
 
+
+
             // Says if we joined a room or not by if there's a div for it
             inRoom = function (roomId) {
                 return $("#room-" + roomId).length > 0;
@@ -137,6 +141,7 @@
                         "command": "join",
                         "room": roomId
                     }));
+                    console.log("there");
                 }
             });
 

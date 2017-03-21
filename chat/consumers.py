@@ -70,13 +70,13 @@ def chat_join(message):
     # OK, add them in. The websocket_group is what we'll send messages
     # to so that everyone in the chat room gets them.
     room.websocket_group.add(message.reply_channel)
-    message.channel_session['rooms'] = list(set(message.channel_session['rooms']).union([room.id]))
+    message.channel_session['rooms'] = list(set(message.channel_session['rooms']).union([room.friendship.id]))
     # Send a message back that will prompt them to open the room
     # Done server-side so that we could, for example, make people
     # join rooms automatically.
     message.reply_channel.send({
         "text": json.dumps({
-            "join": str(room.id),
+            "join": str(room.friendship.id),
         }),
     })
 
@@ -92,11 +92,11 @@ def chat_leave(message):
         room.send_message(None, message.user, MSG_TYPE_LEAVE)
 
     room.websocket_group.discard(message.reply_channel)
-    message.channel_session['rooms'] = list(set(message.channel_session['rooms']).difference([room.id]))
+    message.channel_session['rooms'] = list(set(message.channel_session['rooms']).difference([room.friendship.id]))
     # Send a message back that will prompt them to close the room
     message.reply_channel.send({
         "text": json.dumps({
-            "leave": str(room.id),
+            "leave": str(room.friendship.id),
         }),
     })
 
@@ -105,8 +105,8 @@ def chat_leave(message):
 @catch_client_error
 def chat_send(message):
     # Check that the user in the room
-    if int(message['room']) not in message.channel_session['rooms']:
-        raise ClientError("ROOM_ACCESS_DENIED")
+    #if int(message['room']) not in message.channel_session['rooms']:
+     #   raise ClientError("ROOM_ACCESS_DENIED")
     # Find the room they're sending to, check perms
     room = get_room_or_error(message["room"], message.user)
     # Send the message along

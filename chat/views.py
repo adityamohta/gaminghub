@@ -12,8 +12,8 @@ class RoomList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         current_user = self.request.user
         rooms = Room.objects.filter(
-            Q(room__player1__username=current_user) |
-            Q(room__player2__username=current_user)
+            Q(friendship__player1__username=current_user) |
+            Q(friendship__player2__username=current_user)
         )
         return rooms
 

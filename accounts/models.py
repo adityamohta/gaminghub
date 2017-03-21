@@ -10,7 +10,6 @@ class Player(User):
     # implement
     # profile as foreignkey, about as charfield, player as manytomanyfield through friends model.
     friends = models.ManyToManyField('Player', through='friends.Friendship', verbose_name='list of friends')
-    # rooms = models.ManyToManyField('self', through='chat.Room', verbose_name='list of rooms', symmetrical=False)
 
     def __unicode__(self):
         return self.username
