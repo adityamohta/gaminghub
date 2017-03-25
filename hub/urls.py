@@ -17,11 +17,15 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+from chat.views import RoomList
+
 
 urlpatterns = [
     url(r"^admin/", admin.site.urls),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^friends/", include("friends.urls", namespace="friends")),
+    url(r"^chat/$", RoomList.as_view(), name="room_list"),
+
 ]
 
 if settings.DEBUG:
