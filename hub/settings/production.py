@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
 
 # Application definition
 
@@ -40,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # My Apps.
     'accounts',
+    'friends',
+    'chat',
+    # Third Party Apps.
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -81,10 +86,21 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'hub',
         'USER': 'postgres',
-        'PASSWORD': 'qwerty',
+        'PASSWORD': 'igdtuonline',
         'PORT': '5432',
         'HOST': 'localhost'
     }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+        "ROUTING": "hub.routing.channel_routing",
+    },
 }
 
 
@@ -125,9 +141,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = '/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),   # for local environment.
     # 'var/www/static',                   # for production.
 ]
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
-LOGIN_REDIRECT_URL = '/'
+
