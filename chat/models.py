@@ -11,10 +11,17 @@ class RoomManager(models.Manager):
         return room
 
 
+class Message(models.Model):
+    user = models.ForeignKey("accounts.Player", related_name="messages", null=True, blank=True)
+    text = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    room = models.ForeignKey("Room", related_name="messages")
+
+
 class Room(models.Model):  # a room for friends to chat in
 
     friendship = models.OneToOneField('friends.Friendship', on_delete=models.CASCADE, primary_key=True)
-    message = models.TextField(blank=True, null=True)
+    # message = models.TextField(blank=True, null=True)
     last_used = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
@@ -34,7 +41,7 @@ class Room(models.Model):  # a room for friends to chat in
         """
         final_msg = {'room': str(self.friendship.id), 'message': message, 'username': user.username, 'msg_type': msg_type}
         self.save()
-        print(self.message)
+        print(message)
         # Send out the message to everyone in the room
         self.websocket_group.send(
             {"text": json.dumps(final_msg)}

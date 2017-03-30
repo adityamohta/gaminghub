@@ -2,21 +2,18 @@
 
 
 {% block content %}
-    {{ block.super }}
-
+{{ block.super }}
     <main>
         <div class="row">
             <div class="col s12">
-                <h2 class="flow-text center">Profile</h2>
+                <h2 class="flow-text center">Chat room of {{ room.friendship }}</h2>
             </div>
         </div>
         <div class="row">
             <div class="col s12">
-                <p>{{ player.get_absolute_url }}</p>
-                <p>{{ player.username }}</p>
+                {% include "chat/chat.html" with messages=room.messages.all room_id=room.friendship.id %}
             </div>
         </div>
     </main>
-
 
 {% endblock content %}

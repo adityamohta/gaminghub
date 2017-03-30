@@ -2,6 +2,7 @@ from functools import wraps
 
 from .exceptions import ClientError
 from .models import Room
+from accounts.models import Player
 
 
 def catch_client_error(func):
@@ -29,3 +30,11 @@ def get_room_or_error(room_id, user):
     except Room.DoesNotExist:
         raise ClientError("ROOM_INVALID")
     return room
+
+
+def get_player_or_error(user):
+    try:
+        player = Player.objects.get(id=user.id)
+    except Player.DoesNotExist:
+        raise ClientError("PLAYER_INVALID")
+    return player

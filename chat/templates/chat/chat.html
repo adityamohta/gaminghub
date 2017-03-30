@@ -1,0 +1,153 @@
+{#<p class="flow-text">room_id = {{ room_id }}</p>#}
+{% load staticfiles %}
+<div class="chat-box">
+    <ul id="chat">
+        {% for message in messages %}
+            <li class="row">
+                <div class="{% if message.user.username == request.user.username %}right{% else %}left{% endif %}">
+                    <div class="row">
+                        <div class="col s12">
+                            <img class="circle chat-box-user" src="{% static 'images/user.jpg' %}" alt="{{ message.user.username }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-panel {% if message.user.username == request.user.username %}right{% else %}left{% endif %}">
+                    <span>{{ message.text }}</span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <div>
+        <form>
+            <input id="chat-text" type="text" />
+            <button id="chat-send-button" class="waves-effect waves-light btn">Send</button>
+        </form>
+    </div>
+</div>
+
+{% block extra_body %}
+    <script>
+        $(document).ready(function(){
+            var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+            var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
+            console.log("Connecting to " + ws_path);
+            var socket = new ReconnectingWebSocket(ws_path);
+
+            socket.onmessage = function (message) {
+                // Decode the JSON
+                console.log("Got websocket message " + message.data);
+                var data = JSON.parse(message.data);
+                // Handle errors
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                if (data.message) {
+                    var username = "{{ request.user.username }}";
+
+                    if(data.username == username){
+                        var place = "right";
+                    }
+                    else{
+                        var place = "left";
+                    }
+                    var msg = '<li class="row">\
+                                <div class="'+ place +'">\
+                                    <div class="row">\
+                                        <div class="col s12">\
+                                            <img class="circle chat-box-user" src="{% static 'images/user.jpg' %}" alt="'+ data.username +'">\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                                <div class="card-panel '+ place +'">\
+                                <span>'+ data.message +'</span>\
+                                </div>\
+                            </li>'
+
+{#                    var msg = "<li> <small>" + data.username + "</small> " + data.message +"</li>";#}
+                    $("#chat").append(msg);
+                }
+
+            };
+            socket.onopen = function () {
+                // send room_id and other data once connection is established.
+                socket.send(JSON.stringify({
+                    "command": "join",
+                    "room": {{ room_id }}     //roomId
+                }));
+                console.log("Connected to chat socket");
+            };
+            socket.onclose = function () {
+                console.log("Disconnected from chat socket");
+            }
+
+            $("#chat-send-button").click(function(e){
+                e.preventDefault();
+                var message = $("#chat-text").val();
+                if(message){
+                    console.log(message);
+                    socket.send(JSON.stringify({
+                        "command": "send",
+                        "room": {{ room_id }},
+                        "message": message
+                    }));
+                    $("#chat-text").val("");
+                }
+            });
+        });
+    </script>
+{% endblock extra_body %}
+
+{##}
+{##}
+{##}
+{##}
+{#<div class="menu">#}
+{#    <div class="back"><i class="fa fa-chevron-left"></i> <img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>#}
+{#    <div class="name">Alex</div>#}
+{#    <div class="last">18:09</div>#}
+{#</div>#}
+{#<ol class="chat">#}
+{#    <li class="other">#}
+{#        <div class="avatar"><img src="http://i.imgur.com/DY6gND0.png" draggable="false"/></div>#}
+{#        <div class="msg">#}
+{#            <p>Qué contexto de Góngora? <emoji class="suffocated"/></p>#}
+{#            <time>20:18</time>#}
+{#        </div>#}
+{#    </li>#}
+{#    <li class="self">#}
+{#        <div class="avatar"><img src="http://i.imgur.com/HYcn9xO.png" draggable="false"/></div>#}
+{#        <div class="msg">#}
+{#            <img src="http://i.imgur.com/QAROObc.jpg" draggable="false"/>#}
+{#            <time>20:19</time>#}
+{#        </div>#}
+{#    </li>#}
+{##}
+{#    <div class="day">Hoy</div>#}
+{##}
+{#    <li class="self">#}
+{#        <div class="avatar"><img src="http://i.imgur.com/HYcn9xO.png" draggable="false"/></div>#}
+{#        <div class="msg">#}
+{#            <p>Te apetece jugar a Minecraft?</p>#}
+{#            <time>18:03</time>#}
+{#        </div>#}
+{#    </li>#}
+{#</ol>#}
+{#<input class="textarea" type="text" placeholder="Type here!"/><div class="emojis"></div>#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

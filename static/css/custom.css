@@ -13,3 +13,17 @@ h2.flow-text.center{
 .dropdown-content li>a, .dropdown-content li>span{
     color: #00bcd4;
 }
+
+div.chat-box {
+    border: none;
+    padding: 5px;
+    /*font: 24px/36px sans-serif;*/
+    max-width: 100%;
+    max-height: 400px;
+    overflow: scroll;
+}
+
+.chat-box-user{
+    height: 70px;
+    width: 70px;
+}

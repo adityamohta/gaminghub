@@ -3,8 +3,8 @@ from channels import Channel
 from channels.auth import channel_session_user_from_http, channel_session_user
 
 from .settings import MSG_TYPE_LEAVE, MSG_TYPE_ENTER, NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS
-from .models import Room
-from .utils import get_room_or_error, catch_client_error
+from .models import Room, Message
+from .utils import get_room_or_error, catch_client_error, get_player_or_error
 from .exceptions import ClientError
 
 
@@ -109,5 +109,7 @@ def chat_send(message):
      #   raise ClientError("ROOM_ACCESS_DENIED")
     # Find the room they're sending to, check perms
     room = get_room_or_error(message["room"], message.user)
+    player = get_player_or_error(message.user)
     # Send the message along
-    room.send_message(message["message"], message.user)
+    room.send_message(message["message"], player)
+    Message.objects.create(user=player, text=message["message"], room=room)

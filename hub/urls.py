@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from chat.views import RoomList
+from chat.views import *
 
 
 urlpatterns = [
@@ -25,6 +25,8 @@ urlpatterns = [
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^friends/", include("friends.urls", namespace="friends")),
     url(r"^chat/$", RoomList.as_view(), name="room_list"),
+    url(r"^chat/(?P<username>[\w.@+-]+)/$", RoomDetailView.as_view(), name="room_detail"),
+    url(r"^chat/room/(?P<pk>\d+)/$", RoomMessageListAPIView.as_view(), name="room_message_list"),
 
 ]
 

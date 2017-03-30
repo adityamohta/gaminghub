@@ -2,18 +2,47 @@
 <style>
     header, main, footer {
         padding-left: 250px;
+        padding-right: 250px;
     }
 
     @media only screen and (max-width : 992px) {
         header, main, footer {
             padding-left: 0;
+            padding-right: 0;
         }
     }
 </style>
 <nav>
     <div class="nav-wrapper">
+        <ul id="right-slide-out" class="side-nav fixed">
+            <li>
+                <div class="userView">
+                    <a href="#" class="center"><span class="flow-text">CHAT</span></a>
+                </div>
+            </li>
+            <li><div class="divider"></div></li>
+            <ul class="collapsible black-text" data-collapsible="expandable">
+                <li>
+                    <div class="collapsible-header">Ronaldo</div>
+                    <div class="collapsible-body">
+                        <span>add chat window here</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">John Snow</div>
+                    <div class="collapsible-body"><span>add chat window here</span></div>
+                </li>
+                <li>
+                    <div class="collapsible-header">Sumer Fuddi</div>
+                    <div class="collapsible-body"><span>add chat window here</span></div>
+                </li>
+            </ul>
+{#            <li><a href="#!">Friend 1</a></li>#}
+{#            <li><a href="#!">Friend 2</a></li>#}
+{#            <li><a href="#!">Friend 3</a></li>#}
+        </ul>
         <!--add navbar contents-->
-        <ul id="slide-out" class="side-nav fixed">
+        <ul id="left-slide-out" class="side-nav fixed">
             <li><div class="userView">
                 <div class="background">
                 </div>
@@ -40,18 +69,28 @@
             <li><a class="waves-effect" href="#">Tic Tac Toe</a></li>
         </ul>
         <ul class="right">
-            <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+            <a href="#" data-activates="right-slide-out" class="right-button-collapse right"><i class="material-icons">menu</i></a>
         </ul>
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul>
+            <a href="#" data-activates="left-slide-out" class="left-button-collapse"><i class="material-icons">menu</i></a>
+        </ul>
     </div>
 </nav>
 
 <script>
     {% block navbar_jquery %}
-        $(".button-collapse").sideNav();
-        $('.button-collapse').sideNav({
+{#        $(".button-collapse").sideNav();#}
+        $('.collapsible').collapsible();
+        $('.left-button-collapse').sideNav({
                     menuWidth: 250, // Default is 300
                     edge: 'left', // Choose the horizontal origin
+                    closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                    draggable: true // Choose whether you can drag to open on touch screens
+                }
+        );
+        $('.right-button-collapse').sideNav({
+                    menuWidth: 250, // Default is 300
+                    edge: 'right', // Choose the horizontal origin
                     closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
                     draggable: true // Choose whether you can drag to open on touch screens
                 }

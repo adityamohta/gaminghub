@@ -16,7 +16,7 @@ class Friendship(models.Model):
     room_created = models.BooleanField(default=False)  # make True when friend request accepted
 
     def __unicode__(self):
-        return "%s" % str(self.requested_at)
+        return "%s - %s - %s" % (self.player1.username, self.player2.username, str(self.requested_at))
 
     class Meta:
         app_label = 'friends'
