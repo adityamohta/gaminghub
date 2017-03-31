@@ -24,8 +24,7 @@ urlpatterns = [
     url(r"^admin/", admin.site.urls),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^friends/", include("friends.urls", namespace="friends")),
-    url(r"^chat/$", RoomList.as_view(), name="room_list"),
-    url(r"^chat/(?P<username>[\w.@+-]+)/$", RoomDetailView.as_view(), name="room_detail"),
+    url(r"^chat/", include("chat.urls", namespace="chat")),
     url(r"^chat/room/(?P<pk>\d+)/$", RoomMessageListAPIView.as_view(), name="room_message_list"),
 
 ]

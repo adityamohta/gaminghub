@@ -3,7 +3,7 @@ from django.http import Http404
 from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404
 
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 
 from .models import Room
 from accounts.mixins import LoginRequiredMixin
@@ -42,6 +42,17 @@ class RoomList(LoginRequiredMixin, ListView):
         rooms = Room.objects.filter(
             Q(friendship__player1__username=current_user) |
             Q(friendship__player2__username=current_user)
+        )
+        return rooms
+
+
+class RoomListApiView(ListAPIView):
+    serializer_class = RoomListSerializer
+    def get_queryset(self):
+        username = self.request.user.username
+        rooms = Room.objects.filter(
+                Q(friendship__player1__username=username) |
+                Q(friendship__player2__username=username)
         )
         return rooms
 

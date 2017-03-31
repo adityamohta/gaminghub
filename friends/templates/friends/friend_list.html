@@ -41,7 +41,7 @@
                             <td>{{ player.first_name }} {{ player.last_name }}</td>
                             <td>
                                 <button class="btn waves-effect waves-light cyan">Friends<i class="material-icons right">done</i></button>
-                                <a class="btn" href="{% url 'room_detail' username=player.username %}">chat</a>
+                                <a class="btn" href="{% url 'chat:room_detail' username=player.username %}">chat</a>
                             </td>
                         </tr>
                     {% endfor %}

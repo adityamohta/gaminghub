@@ -79,6 +79,26 @@
 
 <script>
     {% block navbar_jquery %}
+
+        $.ajax({
+            url: "/chat/api/rooms/",
+            type: "GET",
+            success: function(data) {
+                data.map(function(object){
+                    console.log(object);
+                    var messages = object.messages;
+                    var header = '<div class="collapsible-header">'+ 'Ronaldo' +'</div>';
+                    var msg_body = '<div class="collapsible-body"><span>' + 'hey' + '</span></div>';
+{#                    '{% include "chat/chat.html" with messages=room.messages.all room_id=room.friendship.id %}'#}
+                    console.log(msg_body);
+                });
+            },
+            error: function() {
+                console.log("error");
+            }
+        });
+
+
 {#        $(".button-collapse").sideNav();#}
         $('.collapsible').collapsible();
         $('.left-button-collapse').sideNav({
